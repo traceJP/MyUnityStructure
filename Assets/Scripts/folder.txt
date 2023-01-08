@@ -1,0 +1,58 @@
+﻿我的Unity项目目录规划：
+
+Assets
+    AddressableAssetsData（AA包系统目录）
+    Resources
+        ArtDst（自己的资源）
+            Role
+                Prefab
+                    xxx.prefab
+            UIRenderer
+                Pages
+                    XXXPage
+                        xxx.prefab
+        ArtSrc（其他资源）
+            外部引入资源
+    Scenes
+        SampleScene.unity
+    Config（存放配置文件）
+        InputAction
+            - PlayerInputActions.inputactions
+        其他配置文件
+    Scripts
+        Utils
+            AddressableUtil.cs
+            其他Util.cs
+        Global
+            Entity
+                用户输入
+                音乐管理等
+            其他常规业务文件夹（参考XXXService）
+        UIRenderer
+            其他常规业务文件夹（参考XXXService）
+            UIManager.cs
+        XXXService（TitleService | WorldService）
+            Assets（当前业务资源）（XXXService层）
+                XXXAssets.cs
+            Controller（当前业务类）（XXXService.Controller层）
+                XXXController.cs
+                XXXController.cs
+                XXXController.cs
+            Entities（当前业务实体类，统一继承MonoBehaviour）（XXXService.Models层）
+                Impl
+                    XXXEntity.cs
+                    XXXEntity.cs
+                    XXXEntity.cs
+                IXXXEntity.cs
+                IXXXEntity.cs
+                IXXXEntity.cs
+            Facades（门面类）（XXXService.Facades层）
+                AllXXX.cs
+                AllXXX.cs
+                AllXXX.cs
+            XXXManager.cs（管理器）（XXXService层）
+        App.cs（主入口，继承MonoBehaviour）
+        
+
+
+
