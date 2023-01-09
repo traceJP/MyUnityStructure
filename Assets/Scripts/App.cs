@@ -20,6 +20,7 @@ public class App : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        _isInit = false;
     }
 
     /// <summary>
@@ -27,8 +28,6 @@ public class App : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        Debug.Log("程序从这里开始执行");
-        _isInit = false;
 
         // ================================================== CTOR ====================================================
         AllAssets.Ctor();
@@ -48,7 +47,7 @@ public class App : MonoBehaviour
 
         // ======================================= INJECT 注入 ========= 管理器缓存进AllManager ==========================
         AllManager.RoleManager = new RoleManager();
-        AllManager.UIManager = new UIManager();
+        AllManager.SetUIManager(new UIManager());
         AllManager.UIManager.Inject(transform.GetComponentInChildren<Canvas>());
 
         // ================================================= INIT === Init 顺序一定是在所有的 ctor 的后面 =================

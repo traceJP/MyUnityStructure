@@ -1,4 +1,5 @@
 ﻿using System;
+using UIRenderer.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,11 @@ namespace UIRenderer.Entities
     ///
     /// --- 绝对不做业务的逻辑处理
     /// </summary>
-    public class UIPageLogin : MonoBehaviour
+    public class UIPageLogin : MonoBehaviour, IUIPanel
     {
+        UITypeID IUIPanel.TypeID => UITypeID.PageTitle;
+        UIRootLevel IUIPanel.RootLevel => UIRootLevel.Page;
+        
 
         public Button startGameButton;
 
@@ -37,5 +41,6 @@ namespace UIRenderer.Entities
         }
 
 
+        
     }
 }

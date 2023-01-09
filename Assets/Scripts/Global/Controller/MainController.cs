@@ -28,20 +28,21 @@ namespace Controller
         
         public async Task Init()
         {
-            // 初始化加载资源
             GameAssets gameAssets = AllAssets.GameAssets;
             await AllAssets.GameAssets.LoadAllAssets();
 
-            // 初始化 uiManager 首先要初始化manager中的所有页面 所以 得到 UIPageLogin 上的脚本 用于初始化 uiManager
-            UIPageLogin prefab = gameAssets.GETUIPageLogin().GetComponent<UIPageLogin>();
-            AllManager.UIManager.Init(prefab);
+
+            await AllManager.UIManager.Init();
+            
 
             RoleEntity rolePrefab = gameAssets.GetRolePrefab().GetComponent<RoleEntity>();
             AllManager.RoleManager.Init(rolePrefab);
             
+            
+            
             // 业务逻辑1
             // 通过 AllManager 拿到管理器的缓存
-            UIPageLogin page = AllManager.UIManager.OpenLogin();    // 打开Login页面，并且缓存到变量中
+            UIPageLogin page = AllManager.UIManager.OpenPage<UIPageLogin>();    // 打开Login页面，并且缓存到变量中
             page.OnStartGameHandle += OnStartGame;
             page.Init();
             // 将UIPageLogin缓存到统一管理缓存的脚本文件夹中

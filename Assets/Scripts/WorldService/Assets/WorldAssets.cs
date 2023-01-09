@@ -1,20 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-using Utils.Base;
+using Utils;
 
 namespace WorldService.Assets
 {
-    public class WorldAssets : BaseAssetsUtil
+    public class WorldAssets
     {
-        private Dictionary<string, GameObject> _allPrefab;
+        private const string RoleAssetsTag = "RoleAssets";
+        public Dictionary<RoleAssetsEnum, GameObject> RoleAssets { get; private set; }
+        public enum RoleAssetsEnum
+        {
+            RoleEntity,
+        }
 
         public WorldAssets()
         {
-            _allPrefab = new Dictionary<string, GameObject>();
+            RoleAssets = new Dictionary<RoleAssetsEnum, GameObject>();
+        }
+
+        public async Task LoadAllAssets()
+        {
+            await AddressableUtil.LoadWithLabel<GameObject>(RoleAssetsTag, res =>
+            {
+                var enumKey = Enum.Parse<RoleAssetsEnum>(res.name);
+                RoleAssets.Add(enumKey, res);
+            });
         }
         
-        // TODO: 封装Assets的基本逻辑 例如，拿取一个预制体，拿取一段音频等操作
-        
-        
+     
     }
 }

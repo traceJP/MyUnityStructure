@@ -1,44 +1,59 @@
-﻿using UIRenderer.Entities;
+﻿using System.Threading.Tasks;
+using UIRenderer.Assets;
+using UIRenderer.Entities;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UIRenderer
 {
-    
-    /// <summary>
-    ///  UI管理器
-    /// 
-    /// </summary>
-    public class UIManager    // 不需要拖拽绑定后 也不需要继承 MonoBehaviour 了
+    public class UIManager
     {
-        
-        // 引入了 AA包 之后 即可在游戏时加载所有资源 不要再使用拖拽绑定
+
         private Canvas _canvas;
-        private UIPageLogin _uiPageLoginPrefab;
 
+        private UIAssets _layoutAssets;
 
+        private Image _backGround;
+
+        private Transform _pageRoot, _windowRoot, _worldTipsRoot, _uiTipsRoot;
+        
         public void Inject(Canvas canvas)
         {
-            this._canvas = canvas;
+            _canvas = canvas;
+        }
+
+        public async Task Init()
+        {
+            // 加载资源
+            _layoutAssets = new UIAssets();
+            await _layoutAssets.LoadAll();
+            
+            // 初始化 canvas层级
+            var trans = _canvas.transform;
+            _backGround = trans.GetChild(0).GetComponent<Image>();
+            _worldTipsRoot = trans.GetChild(1);
+            _pageRoot = trans.GetChild(2);
+            _windowRoot = trans.GetChild(3);
+            _uiTipsRoot = trans.GetChild(4);
+
+            Debug.Assert(_backGround != null);
+            Debug.Assert(_worldTipsRoot != null);
+            Debug.Assert(_pageRoot != null);
+            Debug.Assert(_windowRoot != null);
+            Debug.Assert(_uiTipsRoot != null);
             
         }
 
-        public void Init(UIPageLogin uiPageLogin)
-        {
-            this._uiPageLoginPrefab = uiPageLogin;
+        private GameObject GetPrefab<T>() {
+            return _layoutAssets.GetUIPrefab(typeof(T));
         }
 
-        public UIPageLogin OpenLogin()
-        {
-            UIPageLogin page = GameObject.Instantiate(_uiPageLoginPrefab, _canvas.transform);
-            return page;
+        public T OpenPage<T>() where T : IUIPanel {
+            var prefab = GetPrefab<T>();
+            prefab = Object.Instantiate(prefab, _pageRoot);
+            return prefab.GetComponent<T>();
         }
-
-        
-        
         
     }
-    
-
-    
     
 }

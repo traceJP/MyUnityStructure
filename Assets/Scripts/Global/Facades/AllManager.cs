@@ -7,7 +7,8 @@ namespace Facades
     {
         
         
-        public static UIManager UIManager;
+        public static UIManager UIManager { get; private set; }
+        public static void SetUIManager(UIManager ui) => UIManager = ui;
 
         
         

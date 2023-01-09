@@ -12,6 +12,7 @@ namespace Facades
         public static void Ctor()
         {
             GameAssets = new GameAssets();
+            
         }
 
     }

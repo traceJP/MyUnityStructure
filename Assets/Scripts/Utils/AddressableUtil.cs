@@ -14,8 +14,8 @@ namespace Utils
                     labelString = label
                 };
                 var list = await Addressables.LoadAssetsAsync<T>(labelReference, null).Task;
-                for (var i = 0; i < list.Count; i += 1) {
-                    var res = list[i];
+                foreach (var res in list)
+                {
                     callback(res);
                 }
             } catch {
