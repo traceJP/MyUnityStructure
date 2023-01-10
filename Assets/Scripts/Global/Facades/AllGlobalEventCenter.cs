@@ -1,5 +1,5 @@
 ﻿using System;
-using Models;
+using Global.Entities.Event;
 
 namespace Facades
 {
@@ -8,7 +8,7 @@ namespace Facades
     /// 但是其本质不是事件
     /// 它只是一个静态类 供业务层中间进行通信使用
     /// </summary>
-    public class AllEventCenter
+    public class AllGlobalEventCenter
     {
 
         // 数据结构事件

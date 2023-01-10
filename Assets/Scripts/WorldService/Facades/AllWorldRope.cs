@@ -1,20 +1,17 @@
-﻿using Role.Entities;
-using WorldService.Assets;
+﻿using WorldService.Entities;
 
 namespace WorldService.Facades
 {
     public static class AllWorldRope
     {
         
-        public static WorldAssets WorldAssets;
-        
-        public static RoleEntity roleEntity;
+        public static RoleEntity RoleEntity { get; private set; }
+        public static void SetRoleEntity(RoleEntity roleEntity) => RoleEntity = roleEntity;
 
 
         public static void Ctor()
         {
-            WorldAssets = new WorldAssets();
-            roleEntity = null;
+            RoleEntity = null;
         }
         
         

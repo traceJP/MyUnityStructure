@@ -13,6 +13,7 @@ namespace Global.Facades
         
         public static void Ctor()
         {
+            
             InputEntity = new InputEntity();
             Debug.Log("InputEntity 生成");
 

@@ -3,7 +3,7 @@
     /// <summary>
     /// 战斗的业务
     /// </summary>
-    public class BattleController
+    public class attleController
     {
 
         // 构造 Ctor Init 。。。

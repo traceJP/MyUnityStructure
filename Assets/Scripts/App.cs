@@ -1,10 +1,11 @@
 using System;
-using Controller;
 using Facades;
+using Global.Controller;
 using Global.Facades;
-using Role;
 using UIRenderer;
 using UnityEngine;
+using WorldService.Controller;
+using WorldService.Facades;
 
 public class App : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class App : MonoBehaviour
     // 主业务
     private MainController _mainController;
     
+    // 世界业务
+    private WorldController _worldController;
+    
     // 角色业务
     private RoleController _roleController;
 
@@ -21,64 +25,49 @@ public class App : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         _isInit = false;
-    }
-
-    /// <summary>
-    ///  这是整个程序（游戏）唯一一个入口 唯一一个Start，唯一一个Update。
-    /// </summary>
-    private void Start()
-    {
-
+        
         // ================================================== CTOR ====================================================
-        AllAssets.Ctor();
-        AllRepository.Ctor();
         AllManager.Ctor();
-        AllEventCenter.Ctor();
+        
+        AllGlobalEventCenter.Ctor();
         
         AllGlobalRope.Ctor();
+        AllWorldRope.Ctor();
         
+        AllGlobalAssets.Ctor();
+        AllWorldAssets.Ctor();
 
         _mainController = new MainController();
         _mainController.Ctor();
-        
+        _worldController = new WorldController();
+        _worldController.Ctor();
         _roleController = new RoleController();
         _roleController.Ctor();
-
-
-        // ======================================= INJECT 注入 ========= 管理器缓存进AllManager ==========================
-        AllManager.RoleManager = new RoleManager();
+        
+        
+        // ======================================= INJECT =============================================================
         AllManager.SetUIManager(new UIManager());
-        AllManager.UIManager.Inject(transform.GetComponentInChildren<Canvas>());
+        _mainController.Inject(transform.GetComponentInChildren<Canvas>());
 
-        // ================================================= INIT === Init 顺序一定是在所有的 ctor 的后面 =================
+        
+        // ================================================= INIT =====================================================
         Action action = async () =>
         {
             await _mainController.Init();
-            _roleController.Init();
+            await _worldController.Init();
             _isInit = true;
         };
         action.Invoke();
-        
-        // =================================== CTOR INJECT INIt 三个流程结束后 游戏开始 ===============================
-        
-        
-        
-
+      
     }
     
     
     private void Update()
     {
+        if (!_isInit) return;
 
-        if (!_isInit)    // 等待所有 Init 执行完毕后 才可以开始 Tick
-        {
-            return;
-        }
-        
         _mainController.Tick();
-        
-        // 角色业务逻辑从 App 中分离到 RoleController 中
-        _roleController.Tick();   // 手动调用 Tick 方法 以绑定 Update 方法
+        _roleController.Tick();
         
     }
 }
