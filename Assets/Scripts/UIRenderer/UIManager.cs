@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using UIRenderer.Assets;
-using UIRenderer.Entities;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -8,6 +8,10 @@ namespace WorldService.Assets
 {
     public class WorldAssets
     {
+        
+        /// <summary>
+        /// 角色资源
+        /// </summary>
         private const string RoleAssetsTag = "RoleAssets";
         public Dictionary<RoleAssetsEnum, GameObject> RoleAssets { get; private set; }
         public enum RoleAssetsEnum

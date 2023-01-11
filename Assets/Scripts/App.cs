@@ -1,4 +1,5 @@
 using System;
+using Audio;
 using Facades;
 using Global.Controller;
 using Global.Facades;
@@ -47,7 +48,11 @@ public class App : MonoBehaviour
         
         // ======================================= INJECT =============================================================
         AllManager.SetUIManager(new UIManager());
-        _mainController.Inject(transform.GetComponentInChildren<Canvas>());
+        AllManager.SetAudioManager(new AudioManager());
+        _mainController.Inject(
+            transform.GetComponentInChildren<Canvas>(),
+            transform.GetComponentInChildren<AudioSource>()
+            );
 
         
         // ================================================= INIT =====================================================

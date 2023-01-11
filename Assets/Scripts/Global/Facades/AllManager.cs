@@ -1,4 +1,5 @@
-﻿using UIRenderer;
+﻿using Audio;
+using UIRenderer;
 
 namespace Global.Facades
 {
@@ -8,10 +9,13 @@ namespace Global.Facades
         public static UIManager UIManager { get; private set; }
         public static void SetUIManager(UIManager uiManager) => UIManager = uiManager;
 
-        
+        public static AudioManager AudioManager { get; private set; }
+        public static void SetAudioManager(AudioManager audioManager) => AudioManager = audioManager;
+
         public static void Ctor()
         {
             UIManager = null;
+            AudioManager = null;
         }
         
     }

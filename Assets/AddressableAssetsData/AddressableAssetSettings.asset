@@ -46,6 +46,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d17a7c5ff273739449afa12ca1eb2828, type: 2}
   - {fileID: 11400000, guid: 9fa813db6a0316b438158c5d72eb0ac2, type: 2}
   - {fileID: 11400000, guid: 572efaa7d994f7e47a12c2f57d15a6b2, type: 2}
+  - {fileID: 11400000, guid: 73f323cfe5d3e324ebf7cf27b317b4b6, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -89,6 +90,9 @@ MonoBehaviour:
     - default
     - UIAssets
     - RoleAssets
+    - AudioMixerAssets
+    - MusicClipAssets
+    - SFXClipAssets
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: e947336addf88ae44812b70c8e5e9486, type: 2}

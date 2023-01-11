@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Audio
+  m_EditorClassIdentifier: 
+  m_GroupName: Audio
+  m_Data:
+    m_SerializedData: []
+  m_GUID: beef4aafbc2143144bed0554078bf8a6
+  m_SerializeEntries:
+  - m_GUID: ad3e6fabebbe6f146ad57d843ff19349
+    m_Address: GoForIt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - MusicClipAssets
+  - m_GUID: a2cc6b6b3e02f6249913809e2f65dd1a
+    m_Address: MainAudioMixer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioMixerAssets
+  - m_GUID: 135ce4cc3842d754aae87babc061cce6
+    m_Address: DefaultSFX
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SFXClipAssets
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 7a720a1bee7036444a5c1230f3fc7b28, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 40c0500519cfc6248a6195e4e34e00c7, type: 2}
+    - {fileID: 11400000, guid: 846e16a54941ef6408b1a14d66b88435, type: 2}
