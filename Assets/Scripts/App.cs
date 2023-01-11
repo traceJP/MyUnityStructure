@@ -1,6 +1,7 @@
 using System;
 using Audio;
-using Facades;
+using GameEvent;
+using GameEvent.Facades;
 using Global.Controller;
 using Global.Facades;
 using UIRenderer;
@@ -29,13 +30,11 @@ public class App : MonoBehaviour
         
         // ================================================== CTOR ====================================================
         AllManager.Ctor();
-        
-        AllGlobalEventCenter.Ctor();
-        
+
         AllGlobalRope.Ctor();
         AllWorldRope.Ctor();
-        
-        AllGlobalAssets.Ctor();
+        EventRope.Ctor();
+
         AllWorldAssets.Ctor();
 
         _mainController = new MainController();
@@ -49,6 +48,7 @@ public class App : MonoBehaviour
         // ======================================= INJECT =============================================================
         AllManager.SetUIManager(new UIManager());
         AllManager.SetAudioManager(new AudioManager());
+        AllManager.SetEventManager(new EventManager());
         _mainController.Inject(
             transform.GetComponentInChildren<Canvas>(),
             transform.GetComponentInChildren<AudioSource>()

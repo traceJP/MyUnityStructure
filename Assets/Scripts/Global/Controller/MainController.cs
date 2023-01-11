@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Facades;
+using GameEvent.Facades;
 using Global.Enums;
 using Global.Facades;
 using UIRenderer.Entities;
@@ -29,6 +29,7 @@ namespace Global.Controller
             // 管理器 Init
             await AllManager.UIManager.Init();
             await AllManager.AudioManager.Init();
+            AllManager.EventManager.Init();
 
 
             // ============================================= 开始游戏 ==================================================
@@ -49,14 +50,17 @@ namespace Global.Controller
         private void OnStartGameHandle()
         {
             Debug.Log("开始游戏");
-            var ev = AllGlobalEventCenter.StartGameEvent;
+            
             // 关闭标题页
             _uiPageTitle.TearDown();
             
             // 播放背景音乐
             AllManager.AudioManager.PlayMusic(MusicEnum.GoForIt, AudioGroupEnum.Master);
             
+            // 抛出开始游戏事件
+            var ev = EventRope.StartGameEvent;
             ev.SetIsTrigger(true);
+            AllManager.EventManager.Broadcast(ev);    // 广播
         }
 
         

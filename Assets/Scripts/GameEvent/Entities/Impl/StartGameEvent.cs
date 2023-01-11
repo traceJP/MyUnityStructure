@@ -1,7 +1,7 @@
-﻿namespace Global.Entities.Event
+﻿namespace GameEvent.Entities.Impl
 {
 
-    public class StartGameEvent
+    public class StartGameEvent : IGameEvent
     {
         
         public bool IsTrigger { get; private set; }

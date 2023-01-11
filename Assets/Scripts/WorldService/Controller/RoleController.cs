@@ -1,4 +1,5 @@
-﻿using Facades;
+﻿using GameEvent.Entities.Impl;
+using Global.Facades;
 using UnityEngine;
 using WorldService.Assets;
 using WorldService.Entities;
@@ -23,13 +24,11 @@ namespace WorldService.Controller
         public void Tick()
         {
 
-            var ev = AllGlobalEventCenter.StartGameEvent;
-            if (ev.IsTrigger)
+            AllManager.EventManager.AddListener<StartGameEvent>(action =>
             {
-                ev.SetIsTrigger(false);
                 SpawnRole();
-            }
-            
+            });
+
             // 业务逻辑3 玩家输入移动角色
             if (AllWorldRope.RoleEntity != null)
             {
