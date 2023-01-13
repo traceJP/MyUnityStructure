@@ -73,6 +73,7 @@ public class App : MonoBehaviour
 
         _mainController.Tick();
         _roleController.Tick();
+        _worldController.Tick();
         
     }
 }
