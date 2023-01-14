@@ -9,7 +9,7 @@ namespace WorldService.Entities
 
         private FSMComponent<RoleStateEnum> _fsm;
 
-        public void Init()
+        public void Awake()
         {
             _fsm = new FSMComponent<RoleStateEnum>();
             var idle = new IdleState();

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GameEvent.Entities.Impl;
+using GameEvent.Facades;
 using Global.Facades;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using WorldService.Entities;
 using WorldService.Facades;
@@ -21,12 +21,9 @@ namespace WorldService.Controller
             // 加载世界资源
             await AllWorldAssets.WorldAssets.LoadAllAssets();
 
-            // TODO: 在 GameEvent 接收到世界生成 事件 后 生成世界
-            AllManager.EventManager.AddListener<StartGameEvent>(action =>
-            {
-                SpawnWorld();
-            });
-            
+            // 开始游戏
+            AllManager.EventManager.AddListener<StartGameEvent>(OnHandleStartGame);
+
         }
         
         
@@ -35,27 +32,28 @@ namespace WorldService.Controller
         {
             
         }
-        
 
-        private void SpawnWorld()
+        private void OnHandleStartGame(StartGameEvent startGameEvent)
         {
-            // 生成场景 -> 获取世界
             Action action = async () =>
             {
-                const string sceneName = "Level1";
-                var res = await Addressables.LoadSceneAsync(sceneName).Task;
-                var worldGo = res.Scene.GetRootGameObjects()[0];
-                var worldEntity = worldGo.GetComponent<WorldEntity>();
-
-                // 找到世界的生成角色的坐标点位  &  生成角色
-                var spawnPoint = worldEntity.SpawnerGroup.Find("ROLE_ORIGIN");
-                
-                // TODO：抛出事件 生成角色
-
-                Debug.Log("世界生成完成");
+                await SpawnWorld();
+                // 生成角色
+                var spawnPoint = AllWorldRope.WorldEntity.SpawnerGroup.Find("ROLE_ORIGIN");
+                var roleSpawnEvent = EventRope.RoleSpawnEvent;
+                roleSpawnEvent.SetSpawnPoint(spawnPoint.position);
+                AllManager.EventManager.Broadcast(roleSpawnEvent);
             };
             action.Invoke();
-            
+        }
+        
+        private async Task SpawnWorld()
+        {
+            const string sceneName = "Level1";
+            var res = await Addressables.LoadSceneAsync(sceneName).Task;
+            var worldGo = res.Scene.GetRootGameObjects()[0];
+            var worldEntity = worldGo.GetComponent<WorldEntity>();
+            AllWorldRope.SetWorldEntity(worldEntity);
         }
         
     }

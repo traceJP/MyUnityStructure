@@ -60,6 +60,7 @@ public class App : MonoBehaviour
         {
             await _mainController.Init();
             await _worldController.Init();
+            _roleController.Init();
             _isInit = true;
         };
         action.Invoke();

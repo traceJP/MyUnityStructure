@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DG.Tweening;
 using UIRenderer.Assets;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,7 +51,20 @@ namespace UIRenderer
         public T OpenPage<T>() where T : IUIPanel {
             var prefab = GetPrefab<T>();
             prefab = Object.Instantiate(prefab, _pageRoot);
+            SetFadeOut();
             return prefab.GetComponent<T>();
+        }
+
+        public GameObject SetFadeIn()
+        {
+            _backGround.color = Color.black;
+            return _backGround.gameObject;
+        }
+
+        public GameObject SetFadeOut()
+        {
+            _backGround.color = Color.clear;
+            return _backGround.gameObject;
         }
         
     }

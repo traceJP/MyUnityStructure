@@ -6,12 +6,14 @@ namespace GameEvent.Facades
     {
         
         public static StartGameEvent StartGameEvent { get; private set; }
-        public static void SetStartGameEvent(StartGameEvent ev) => StartGameEvent = ev;
 
-        
+        public static RoleSpawnEvent RoleSpawnEvent { get; private set; }
+
+
         public static void Ctor()
         {
             StartGameEvent = new StartGameEvent();
+            RoleSpawnEvent = new RoleSpawnEvent();
         }
         
     }

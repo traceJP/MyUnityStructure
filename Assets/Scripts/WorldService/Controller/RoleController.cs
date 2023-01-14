@@ -18,17 +18,12 @@ namespace WorldService.Controller
 
         public void Init()
         {
-            
+            AllManager.EventManager.AddListener<RoleSpawnEvent>(SpawnRole);
         }
 
         public void Tick()
         {
-
-            AllManager.EventManager.AddListener<StartGameEvent>(action =>
-            {
-                SpawnRole();
-            });
-
+            
             // 业务逻辑3 玩家输入移动角色
             if (AllWorldRope.RoleEntity != null)
             {
@@ -42,15 +37,14 @@ namespace WorldService.Controller
             
         }
 
-        // 生成角色抽象方法
-        private void SpawnRole()
+        // 生成角色
+        private void SpawnRole(RoleSpawnEvent roleSpawnEvent)
         {
-            // 生成角色 初始化角色 缓存角色
             AllWorldAssets.WorldAssets.RoleAssets.TryGetValue(WorldAssets.RoleAssetsEnum.RoleEntity, 
                 out var rolePrefab);
             Debug.Assert(rolePrefab != null);
             var roleEntity = Object.Instantiate(rolePrefab).GetComponent<RoleEntity>();
-            roleEntity.Init();
+            roleEntity.transform.position = roleSpawnEvent.SpawnPoint;
             AllWorldRope.SetRoleEntity(roleEntity);
         }
 
