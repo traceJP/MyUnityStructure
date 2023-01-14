@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using GameEvent.Entities.Impl;
 using GameEvent.Facades;
 using Global.Facades;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using WorldService.Entities;
 using WorldService.Facades;
@@ -11,21 +12,17 @@ namespace WorldService.Controller
 {
     public class WorldController
     {
-        public void Ctor()
-        {
-            
-        }
+        public void Ctor() { }
         
         public async Task Init()
         {
             // 加载世界资源
             await AllWorldAssets.WorldAssets.LoadAllAssets();
 
-            // 开始游戏
-            AllManager.EventManager.AddListener<StartGameEvent>(OnHandleStartGame);
+            // 事件注册
+            AllManager.EventManager.AddListener<WorldSpawnEvent>(OnSpawnWorldHandle);
 
         }
-        
         
         
         public void Tick()
@@ -33,7 +30,7 @@ namespace WorldService.Controller
             
         }
 
-        private void OnHandleStartGame(StartGameEvent startGameEvent)
+        private void OnSpawnWorldHandle(WorldSpawnEvent worldSpawnEvent)
         {
             Action action = async () =>
             {

@@ -6,6 +6,8 @@ namespace GameEvent.Facades
     {
         
         public static StartGameEvent StartGameEvent { get; private set; }
+        
+        public static WorldSpawnEvent WorldSpawnEvent { get; private set; }
 
         public static RoleSpawnEvent RoleSpawnEvent { get; private set; }
 
@@ -14,6 +16,7 @@ namespace GameEvent.Facades
         {
             StartGameEvent = new StartGameEvent();
             RoleSpawnEvent = new RoleSpawnEvent();
+            WorldSpawnEvent = new WorldSpawnEvent();
         }
         
     }

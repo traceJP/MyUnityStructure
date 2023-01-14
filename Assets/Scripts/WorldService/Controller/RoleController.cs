@@ -46,6 +46,7 @@ namespace WorldService.Controller
             var roleEntity = Object.Instantiate(rolePrefab).GetComponent<RoleEntity>();
             roleEntity.transform.position = roleSpawnEvent.SpawnPoint;
             AllWorldRope.SetRoleEntity(roleEntity);
+            Debug.Log("生成角色");
         }
 
     }

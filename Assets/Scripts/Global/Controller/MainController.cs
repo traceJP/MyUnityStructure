@@ -1,8 +1,5 @@
 ﻿using System.Threading.Tasks;
-using GameEvent.Facades;
-using Global.Enums;
 using Global.Facades;
-using UIRenderer.Entities;
 using UnityEngine;
 
 namespace Global.Controller
@@ -10,10 +7,7 @@ namespace Global.Controller
     public class MainController
     {
 
-        public void Ctor()
-        {
-            
-        }
+        public void Ctor() { }
 
         public void Inject(Canvas canvas, AudioSource globalSource)
         {
@@ -23,46 +17,11 @@ namespace Global.Controller
         
         public async Task Init()
         {
-            // 加载全局资源
-            // await AllGlobalAssets.GlobalAssets.LoadAllAssets();
-
             // 管理器 Init
             await AllManager.UIManager.Init();
             await AllManager.AudioManager.Init();
             AllManager.EventManager.Init();
-
-
-            // ============================================= 开始游戏 ==================================================
-            var titlePage = AllManager.UIManager.OpenPage<UIPageTitle>();
-            titlePage.OnStartGameHandle += OnStartGameHandle;
-            titlePage.Init();
-            _uiPageTitle = titlePage;
         }
 
-        public void Tick()
-        {
-
-        }
-
-        
-        // TODO: 临时标题页缓存 所有业务需要从MainController 移动到 TitleService.TitlePageController 中
-        private UIPageTitle _uiPageTitle;
-        private void OnStartGameHandle()
-        {
-            Debug.Log("开始游戏");
-            
-            // 关闭标题页
-            _uiPageTitle.TearDown();
-            
-            // 播放背景音乐
-            AllManager.AudioManager.PlayMusic(MusicEnum.GoForIt, AudioGroupEnum.Master);
-            
-            // 抛出开始游戏事件
-            var ev = EventRope.StartGameEvent;
-            ev.SetIsTrigger(true);
-            AllManager.EventManager.Broadcast(ev);    // 广播
-        }
-
-        
     }
 }

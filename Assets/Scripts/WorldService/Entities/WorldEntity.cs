@@ -17,6 +17,8 @@ namespace WorldService.Entities
 
             Debug.Assert(SpawnerGroup != null);
             Debug.Assert(CameraGroup != null);
+            
+            Debug.Log("世界已生成！");
 
         }
         

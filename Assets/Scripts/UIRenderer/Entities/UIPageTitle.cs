@@ -16,16 +16,12 @@ namespace UIRenderer.Entities
         public Button startGameButton;
 
 
-        public event Action OnStartGameHandle; 
+        public event Action OnStartGameButton; 
         
         
         public override void Init()
         {
-            startGameButton.onClick.AddListener(() =>
-            {
-                OnStartGameHandle?.Invoke();
-                
-            });
+            startGameButton.onClick.AddListener(() => OnStartGameButton?.Invoke());
         }
 
 
