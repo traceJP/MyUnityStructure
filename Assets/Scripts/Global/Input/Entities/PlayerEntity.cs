@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+﻿using UnityEngine;
 
-namespace Global.Entities.Impl
+namespace Input.Entities
 {
     public class PlayerEntity
     {

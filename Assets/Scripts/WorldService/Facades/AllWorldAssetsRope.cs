@@ -3,7 +3,7 @@ using WorldService.Assets;
 
 namespace WorldService.Facades
 {
-    public static class AllWorldAssets
+    public static class AllWorldAssetsRope
     {
         
         public static WorldAssets WorldAssets { get; private set; }

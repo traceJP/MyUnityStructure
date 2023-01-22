@@ -1,12 +1,6 @@
 using System;
-using Audio;
-using GameEvent;
-using GameEvent.Facades;
-using Global.Controller;
-using Global.Facades;
+using Facades;
 using TitleService.Controller;
-using UIRenderer;
-using UIRenderer.Facades;
 using UnityEngine;
 using WorldService.Controller;
 using WorldService.Facades;
@@ -14,11 +8,9 @@ using WorldService.Facades;
 public class App : MonoBehaviour
 {
 
+    // 初始化标识
     private bool _isInit;
-    
-    // 主业务
-    private MainController _mainController;
-    
+
     // 世界业务
     private WorldController _worldController;
     
@@ -35,41 +27,37 @@ public class App : MonoBehaviour
         
         // ================================================== CTOR ====================================================
         AllManager.Ctor();
-
-        AllGlobalRope.Ctor();
-        AllWorldRope.Ctor();
         AllUIRendererRope.Ctor();
-        EventRope.Ctor();
-
-        AllWorldAssets.Ctor();
-
-        _mainController = new MainController();
-        _mainController.Ctor();
+        AllEventRope.Ctor();
+        
+        AllWorldRope.Ctor();
+        AllWorldAssetsRope.Ctor();
+        
+        
         _worldController = new WorldController();
-        _worldController.Ctor();
         _roleController = new RoleController();
-        _roleController.Ctor();
         _titlePageController = new TitlePageController();
-        _titlePageController.Ctor();
-        
-        
-        // ======================================= INJECT =============================================================
-        AllManager.SetUIManager(new UIManager());
-        AllManager.SetAudioManager(new AudioManager());
-        AllManager.SetEventManager(new EventManager());
-        _mainController.Inject(
-            transform.GetComponentInChildren<Canvas>(),
-            transform.GetComponentInChildren<AudioSource>()
-            );
 
+        // ======================================= INJECT =============================================================
+        AllManager.UIManager.Inject(transform.GetComponentInChildren<Canvas>());
+        AllManager.AudioManager.Inject(transform.GetComponentInChildren<AudioSource>());
+        
         
         // ================================================= INIT =====================================================
         Action action = async () =>
         {
-            await _mainController.Init();
+            // Global
+            await AllManager.UIManager.Init();
+            await AllManager.AudioManager.Init();
+            AllManager.EventManager.Init();
+            AllManager.InputManager.Init();
+            
+            // Service
             await _worldController.Init();
             _roleController.Init();
             _titlePageController.Init();
+            
+            // Init Over
             _isInit = true;
             GameStartController();
         };
@@ -90,7 +78,7 @@ public class App : MonoBehaviour
     private void GameStartController()
     {
         Debug.Log("开始游戏");
-        var ev = EventRope.StartGameEvent;
+        var ev = AllEventRope.StartGameEvent;
         ev.SetIsTrigger(true);
         AllManager.EventManager.Broadcast(ev);
     }

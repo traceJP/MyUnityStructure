@@ -1,8 +1,8 @@
 ﻿using GameEvent.Entities.Impl;
 
-namespace GameEvent.Facades
+namespace Facades
 {
-    public static class EventRope
+    public static class AllEventRope
     {
         
         public static StartGameEvent StartGameEvent { get; private set; }

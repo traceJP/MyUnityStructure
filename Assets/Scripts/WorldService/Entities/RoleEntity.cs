@@ -20,8 +20,9 @@ namespace WorldService.Entities
         }
         
         
-        public void Move()
+        public void Move(Vector2 moveAxis)
         {
+            Debug.Log(moveAxis);
             transform.position += Vector3.right * (Time.deltaTime * -20);
         }
         

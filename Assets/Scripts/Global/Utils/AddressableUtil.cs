@@ -22,6 +22,16 @@ namespace Utils
                 throw new Exception("Failed to load assets with label: " + label);
             }
         }
+
+        public static async Task LoadWithName<T>(string name, Action<T> callback)
+        {
+            try {
+                var res = await Addressables.LoadAssetAsync<T>(name).Task;
+                callback(res);
+            } catch {
+                throw new Exception("Failed to load assets with name: " + name);
+            }
+        }
         
         
     }

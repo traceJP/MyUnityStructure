@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Numerics;
+using Global.Entities.Base;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Global.Entities.Impl
+namespace Input.Entities
 {
     public class InputEntity : InputActionsBase
     {
@@ -12,6 +13,8 @@ namespace Global.Entities.Impl
         public InputEntity()
         {
             Player.Move.started += OnMove;
+            Player.Move.performed += OnMove;
+            Player.Move.canceled += OnMove;
             Enable();
         }
 

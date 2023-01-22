@@ -1,17 +1,12 @@
-﻿using GameEvent.Entities.Impl;
-using GameEvent.Facades;
+﻿using Facades;
+using GameEvent.Entities.Impl;
 using Global.Enums;
-using Global.Facades;
 using UIRenderer.Entities;
-using UIRenderer.Facades;
 
 namespace TitleService.Controller
 {
     public class TitlePageController
     {
-        public void Ctor() { }
-
-
         public void Init()
         {
             AllManager.EventManager.AddListener<StartGameEvent>(OnStartGameHandle);
@@ -34,7 +29,7 @@ namespace TitleService.Controller
             AllManager.AudioManager.PlayMusic(MusicEnum.GoForIt, AudioGroupEnum.Master);
             
             // 生成世界
-            AllManager.EventManager.Broadcast(EventRope.WorldSpawnEvent);
+            AllManager.EventManager.Broadcast(AllEventRope.WorldSpawnEvent);
         }
         
     }

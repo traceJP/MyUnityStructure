@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using DG.Tweening;
 using UIRenderer.Assets;
 using UnityEngine;
 using UnityEngine.UI;
