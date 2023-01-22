@@ -10,14 +10,17 @@ namespace WorldService.Facades
         
         public static WorldEntity WorldEntity { get; private set; }
         public static void SetWorldEntity(WorldEntity worldEntity) => WorldEntity = worldEntity;
+        
+        public static CameraEntity RoleCamera { get; private set; }
+        public static void SetRoleCamera(CameraEntity cameraEntity) => RoleCamera = cameraEntity;
 
 
         public static void Ctor()
         {
             RoleEntity = null;
             WorldEntity = null;
+            RoleCamera = null;
         }
-        
         
     }
 }

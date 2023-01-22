@@ -19,12 +19,18 @@ namespace Input
             PlayerEntity = new PlayerEntity();
 
             // BIND
-            _inputEntity.OnMoveHandle += OnBindPlayerEntity;
+            _inputEntity.OnMoveHandle += OnBindMoveToPlayer;
+            _inputEntity.OnLookHandle += OnBindLookToPlayer;
         }
 
-        private void OnBindPlayerEntity(Vector2 vector2)
+        private void OnBindMoveToPlayer(Vector2 vector2)
         {
-            PlayerEntity.moveAxis = vector2;
+            PlayerEntity.SetMoveAxis(vector2);
+        }
+        
+        private void OnBindLookToPlayer(Vector2 vector2)
+        {
+            PlayerEntity.SetLookAxis(vector2);
         }
         
     }

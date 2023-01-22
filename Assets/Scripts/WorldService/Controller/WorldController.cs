@@ -22,7 +22,7 @@ namespace WorldService.Controller
         }
         
         
-        public void Tick()
+        public void FixedTick()
         {
             
         }
@@ -31,9 +31,16 @@ namespace WorldService.Controller
         {
             Action action = async () =>
             {
+                // 生成世界
                 await SpawnWorld();
+                var worldEntity = AllWorldRope.WorldEntity;
+                
+                // 缓存生成组
+                var roleCamera = worldEntity.CameraGroup.GetChild(0).GetComponent<CameraEntity>();
+                AllWorldRope.SetRoleCamera(roleCamera);
+
                 // 生成角色
-                var spawnPoint = AllWorldRope.WorldEntity.SpawnerGroup.Find("ROLE_ORIGIN");
+                var spawnPoint = worldEntity.SpawnerGroup.Find("ROLE_ORIGIN");
                 var roleSpawnEvent = AllEventRope.RoleSpawnEvent;
                 roleSpawnEvent.SetSpawnPoint(spawnPoint.position);
                 AllManager.EventManager.Broadcast(roleSpawnEvent);

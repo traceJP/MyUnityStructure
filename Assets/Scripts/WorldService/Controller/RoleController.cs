@@ -13,20 +13,13 @@ namespace WorldService.Controller
 
         public void Init()
         {
-            
             AllManager.EventManager.AddListener<RoleSpawnEvent>(SpawnRole);
         }
 
-        public void Tick()
+        public void FixedTick()
         {
-            
-            // 业务逻辑3 玩家输入移动角色
-            if (AllWorldRope.RoleEntity != null)
-            {
-                var moveAxis = AllManager.InputManager.PlayerEntity.moveAxis;
-                AllWorldRope.RoleEntity.Move(moveAxis);
-            }
-            
+            Move();
+            Look();
         }
 
         // 生成角色
@@ -38,7 +31,39 @@ namespace WorldService.Controller
             var roleEntity = Object.Instantiate(rolePrefab).GetComponent<RoleEntity>();
             roleEntity.transform.position = roleSpawnEvent.SpawnPoint;
             AllWorldRope.SetRoleEntity(roleEntity);
-            Debug.Log("生成角色");
+
+        }
+
+        // 角色移动控制
+        private void Move()
+        {
+            var roleCamera = AllWorldRope.RoleCamera;
+            if (AllWorldRope.RoleEntity == null || roleCamera == null)
+            {
+                return;
+            }
+            var moveAxis = AllManager.InputManager.PlayerEntity.MoveAxis;
+            AllWorldRope.RoleEntity.Move(moveAxis, roleCamera.transform);
+        }
+
+        // 角色第三人称相机控制
+        private void Look()
+        {
+            var roleCamera = AllWorldRope.RoleCamera;
+            var roleEntity = AllWorldRope.RoleEntity;
+            if (roleEntity == null || roleCamera == null)
+            {
+                return;
+            }
+            
+            // 相机跟随
+            roleCamera.Follow(roleEntity.transform);
+            
+            // 相机旋转
+            var lookAxis = AllManager.InputManager.PlayerEntity.LookAxis;
+            roleCamera.RotateHorizontal(lookAxis.x);
+            roleCamera.RotateVertical(lookAxis.y);
+            
         }
 
     }

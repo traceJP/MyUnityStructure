@@ -26,19 +26,23 @@ public class App : MonoBehaviour
         _isInit = false;
         
         // ================================================== CTOR ====================================================
+        // Global
         AllManager.Ctor();
         AllUIRendererRope.Ctor();
         AllEventRope.Ctor();
+        AllGlobalRope.Ctor();
         
+        // World
         AllWorldRope.Ctor();
         AllWorldAssetsRope.Ctor();
         
-        
+        // Controller
         _worldController = new WorldController();
         _roleController = new RoleController();
         _titlePageController = new TitlePageController();
 
         // ======================================= INJECT =============================================================
+        AllGlobalRope.SetMainCamera(Camera.main);
         AllManager.UIManager.Inject(transform.GetComponentInChildren<Canvas>());
         AllManager.AudioManager.Inject(transform.GetComponentInChildren<AudioSource>());
         
@@ -69,8 +73,18 @@ public class App : MonoBehaviour
     {
         if (!_isInit) return;
 
-        _roleController.Tick();
-        _worldController.Tick();
+        var deltaTime = Time.deltaTime;
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_isInit) return;
+
+        var fixedDeltaTime = Time.fixedDeltaTime;
+        
+        _roleController.FixedTick();
+        _worldController.FixedTick();
         
     }
 
@@ -78,6 +92,8 @@ public class App : MonoBehaviour
     private void GameStartController()
     {
         Debug.Log("开始游戏");
+        
+        // 抛出事件
         var ev = AllEventRope.StartGameEvent;
         ev.SetIsTrigger(true);
         AllManager.EventManager.Broadcast(ev);
