@@ -12,6 +12,9 @@ namespace Input.Entities
 
         public event Action<Vector2> OnLookHandle;
 
+        public event Action<float> OnScrollHandle; 
+
+        
         public InputEntity()
         {
             Player.Move.started += OnMove;
@@ -21,6 +24,9 @@ namespace Input.Entities
             Player.Look.started += OnLook;
             Player.Look.performed += OnLook;
             Player.Look.canceled += OnLook;
+
+            Player.Scroll.started += OnScroll;
+            Player.Scroll.canceled += OnScroll;
             
             Enable();
         }
@@ -33,6 +39,11 @@ namespace Input.Entities
         private void OnLook(InputAction.CallbackContext ctx)
         {
             OnLookHandle?.Invoke(ctx.ReadValue<Vector2>());
+        }
+        
+        private void OnScroll(InputAction.CallbackContext ctx)
+        {
+            OnScrollHandle?.Invoke(ctx.ReadValue<float>());
         }
         
     }

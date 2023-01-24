@@ -74,6 +74,8 @@ public class App : MonoBehaviour
         if (!_isInit) return;
 
         var deltaTime = Time.deltaTime;
+        
+        _roleController.Tick();
 
     }
 

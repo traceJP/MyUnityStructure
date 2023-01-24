@@ -16,10 +16,14 @@ namespace WorldService.Controller
             AllManager.EventManager.AddListener<RoleSpawnEvent>(SpawnRole);
         }
 
+        public void Tick()
+        {
+            Look();
+        }
+        
         public void FixedTick()
         {
             Move();
-            Look();
         }
 
         // 生成角色
@@ -57,13 +61,16 @@ namespace WorldService.Controller
             }
             
             // 相机跟随
-            roleCamera.Follow(roleEntity.transform);
+            roleCamera.Follow(roleEntity.standThirdPersonCameraRoot);
             
             // 相机旋转
             var lookAxis = AllManager.InputManager.PlayerEntity.LookAxis;
-            roleCamera.RotateHorizontal(lookAxis.x);
-            roleCamera.RotateVertical(lookAxis.y);
+            roleCamera.Rotate(lookAxis);
             
+            // 相机视距
+            var scroll = AllManager.InputManager.PlayerEntity.PullDistance;
+            roleCamera.PullDistance(scroll);
+
         }
 
     }

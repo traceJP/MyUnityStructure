@@ -7,9 +7,25 @@ namespace WorldService.Entities
     public class CameraEntity : MonoBehaviour
     {
         
-        public float sensitivity = 5F;
+        // 镜头灵敏度
+        public float lensSensitivity = 5F;
+
+        // 最大 | 最小 爬升距离
+        public float topClamp = 70;
+        public float bottomClamp = -30;
         
+        // 最大 | 最小 视距
+        public float maxClampDistance = 10;
+        public float minClampDistance = 5;
+
+        // 是否反转 Axis Y
         public bool isRevertY;
+        
+
+        // Rotate Horizontal
+        private float _cinemachineTargetYaw;
+        // Rotate Vertical
+        private float _cinemachineTargetPitch;
 
         
         private CinemachineVirtualCamera _cm;
@@ -29,19 +45,38 @@ namespace WorldService.Entities
             _cm.Follow = target;
         }
 
-        public void RotateHorizontal(float horizontalAxis) {
-            var euler = new Vector3(0, horizontalAxis * sensitivity, 0);
-            transform.Rotate(euler);
+        public void Rotate(Vector2 axis)
+        {
+            axis.y = isRevertY ? axis.y : -axis.y;
+            
+            _cinemachineTargetYaw += axis.x * lensSensitivity;
+            _cinemachineTargetPitch += axis.y * lensSensitivity;
+            
+            // 角度限制
+            _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
+
+            // 旋转
+            transform.rotation = Quaternion.Euler(0, _cinemachineTargetYaw, 0);
+            _cm.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0, 0);
+
         }
 
-        public void RotateVertical(float verticalAxis) {
-            verticalAxis = isRevertY ? -verticalAxis : verticalAxis;
-            var euler = new Vector3(verticalAxis * sensitivity, 0, 0);
-            _cm.transform.Rotate(euler);
-        }
-
-        public void PullDistance(float distanceOffset) {
+        public void PullDistance(float distanceOffset)
+        {
+            var targetDistance = _transposer.m_CameraDistance + distanceOffset;
+            if (targetDistance > maxClampDistance || targetDistance < minClampDistance)
+            {
+                return;
+            }
             _transposer.m_CameraDistance += distanceOffset;
+        }
+        
+        private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
+        {
+            if (lfAngle < -360F) lfAngle += 360F;
+            if (lfAngle > 360F) lfAngle -= 360F;
+            return Mathf.Clamp(lfAngle, lfMin, lfMax);
         }
 
     }

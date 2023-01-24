@@ -21,6 +21,7 @@ namespace Input
             // BIND
             _inputEntity.OnMoveHandle += OnBindMoveToPlayer;
             _inputEntity.OnLookHandle += OnBindLookToPlayer;
+            _inputEntity.OnScrollHandle += OnBindScrollToPlayer;
         }
 
         private void OnBindMoveToPlayer(Vector2 vector2)
@@ -31,6 +32,11 @@ namespace Input
         private void OnBindLookToPlayer(Vector2 vector2)
         {
             PlayerEntity.SetLookAxis(vector2);
+        }
+
+        private void OnBindScrollToPlayer(float pullDistance)
+        {
+            PlayerEntity.SetPullDistance(pullDistance);
         }
         
     }
