@@ -173,7 +173,7 @@ namespace Global.Entities.Base
                     ""id"": ""48b7e1c5-99bf-4f71-9499-b5ea9d4bb97c"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
-                    ""processors"": ""Scale(factor=0.05)"",
+                    ""processors"": ""Clamp(min=-0.5,max=0.5)"",
                     ""groups"": """",
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
